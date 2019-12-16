@@ -1,0 +1,64 @@
+﻿@model ProductSupplyManagement.Models.Product
+@{
+    ViewBag.Title = "Create";
+}
+<div class="row">
+    <a href="@Url.Action("Index", "Product")" class="btn btn-floating waves-effect waves-light red" style="position:relative; top:5px;"><i class="material-icons">arrow_back</i></a>
+    <div class="card">
+        <div class="z-depth-2">
+            <div class="col s12 m6 offset-m3">
+
+                <div class="card-title" style="padding:8px;">
+                    <h4 class="center">Add New Product</h4>
+
+                </div>
+                <div class="card-content">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.TextBoxFor(x => x.ProductName, new { @class = "validate" })
+                                @Html.LabelFor(x => x.ProductName)
+                                @Html.ValidationMessageFor(x => x.ProductName, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.TextBoxFor(x => x.UnitPrice, new { @class = "validate" })
+                                @Html.LabelFor(x => x.UnitPrice)
+                                @Html.ValidationMessageFor(x => x.UnitPrice, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.DropDownListFor(x => x.SellUnit, ViewBag.SellUnits as IEnumerable<SelectListItem>, "", new { @class = "validate" })
+                                @Html.LabelFor(x => x.SellUnit, new { style = "font-size:1rem;" })
+                                @Html.ValidationMessageFor(x => x.SellUnit, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+                        <div class="row right-align">
+                            <button type="submit" class="waves-effect waves-light btn">Save <i class="material-icons right">save_alt</i></button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').formSelect();
+        });
+    </script>
+}
+

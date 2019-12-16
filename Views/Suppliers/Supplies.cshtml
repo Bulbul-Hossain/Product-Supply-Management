@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ProductSupplyManagement.ViewModels.SupplyViewModel>
+
+@{
+    ViewBag.Title = "Supply history";
+}
+
+<div class="card">
+
+    <div class="card-content">
+        <div class="card-image">
+            <a href="@Url.Action("Index", "Suppliers")" class="btn-floating halfway-fab waves-effect waves-light purple left"><i class="material-icons">arrow_back</i></a>
+        </div>
+        <div class="card-title center">
+           Supply history of @ViewBag.SupplierName
+        </div>
+        <div>
+
+            <table class="table bordered">
+                <thead class="light-green lighten-1 white-text">
+                    <tr>
+                        <th>@Html.DisplayNameFor(x => x.Date)</th>
+                        <th>@Html.DisplayNameFor(x => x.ProductName)</th>
+                        <th>@Html.DisplayNameFor(x => x.LotNo)</th>
+                        <th>@Html.DisplayNameFor(x => x.Quantity)</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var s in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(x => s.Date)</td>
+                            <td>@Html.DisplayFor(x => s.ProductName)</td>
+                            <td>@Html.DisplayFor(x => s.LotNo)</td>
+                            <td>@Html.DisplayFor(x => s.Quantity)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

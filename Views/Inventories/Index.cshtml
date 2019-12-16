@@ -1,0 +1,116 @@
+﻿@model IEnumerable<ProductSupplyManagement.Models.Inventory>
+@using ProductSupplyManagement.Helpers
+@{
+    ViewBag.Title = "Index-Inventory";
+}
+
+<div class="card z-" style="padding:7px;">
+
+    <div class="card-content">
+
+        <div class="card-title">
+            Inventory Entries
+        </div>
+
+    </div>
+
+    <div class="right-align">
+        @using (Ajax.BeginForm(new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "tablePlaceHolder" }))
+        {
+            <div class="input-field inline">
+
+                <input type="text" placeholder="company name" name="search" id="search">
+            </div>
+            <button type="submit" class="btn waves-effect waves-light ight-blue darken-1 rounded_corner btn-small">
+                <i class="material-icons">search</i>
+            </button>
+
+            @Ajax.RawActionLink($"<i class='material-icons'>refresh</i>", "Index", "Inventories", new { }, new AjaxOptions { HttpMethod = "GET", OnBegin = "onBegin", InsertionMode = InsertionMode.Replace, UpdateTargetId = "tablePlaceHolder" }, new { @class = "btn waves-effect waves-light light-blue darken-1 rounded_corner btn-small" })
+            <a href="@Url.Action("Create", "Inventories")" class="btn-floating btn-small waves-effect waves-light red vertical_align_top"><i class="material-icons">add</i></a>
+        }
+    </div>
+    <div id="tablePlaceHolder">
+
+        <table class="table bordered">
+            <thead class="light-green lighten-1 white-text">
+                <tr>
+                    <th valign="middle">
+                        @Ajax.RawActionLink($"{Html.DisplayNameFor(x => x.Date)}", "Index", "Inventories", new { sort = ViewBag.DateSort }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "tablePlaceHolder" }, new { @class = "white-text" })
+                        <i class='material-icons right'>@(ViewBag.DateSort == "date_desc" ? "expand_less" : "expand_more")</i>
+                    </th>
+                    <th valign="middle">
+                        @Ajax.RawActionLink($"{Html.DisplayNameFor(x => x.Supplier.SupplierCompany)}", "Index", "Inventories", new { sort = ViewBag.CompanySort }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "tablePlaceHolder" }, new { @class = "white-text" })
+                        <i class='material-icons right'>@(ViewBag.CompanySort == "company_desc" ? "expand_more" : "expand_less")</i>
+                    </th>
+                    <th>@Html.DisplayNameFor(x => x.Product.ProductName)</th>
+                    <th>@Html.DisplayNameFor(x => x.LotNo)</th>
+                    <th>@Html.DisplayNameFor(x => x.Quantity)</th>
+
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var s in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(x => s.Date)</td>
+                        <td>@Html.DisplayFor(x => s.Supplier.SupplierCompany)</td>
+                        <td>@Html.DisplayFor(x => s.Product.ProductName)</td>
+                        <td>@Html.DisplayFor(x => s.LotNo)</td>
+                        <td>@Html.DisplayFor(x => s.Quantity)</td>
+
+                        <td>
+                            <a href="@Url.Action("Edit", "Suppliers", new { id=s.SupplierId})" class="btn btn-small waves-effect waves-light ight-blue darken-1 rounded_corner"><i class="material-icons">edit</i></a>
+                            <a href="@Url.Action("Delete", "Suppliers", new { id=s.SupplierId})" class="btn btn-small waves-effect waves-light red darken-1 rounded_corner"><i class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="right-align">
+        <ul class="pagination">
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li class="waves-effect">
+                    @Ajax.RawActionLink("<i class='material-icons'>chevron_left</i>", "Index", "Inventories", new { page = ViewBag.CurrentPage - 1, sort = ViewBag.sort }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "tablePlaceHolder" }, new { })
+                </li>
+            }
+            @for (var i = 1; i <= ViewBag.TotalPages; i++)
+            {
+
+                if (i != ViewBag.CurrentPage)
+                {
+                <li class="waves-effect">
+                    @*@Html.ActionLink(i.ToString(), "Index", "Inventories", new { page = i }, new { })*@
+                    @Ajax.RawActionLink(i.ToString(), "Index", "Inventories", new { page = i, sort = ViewBag.sort }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "tablePlaceHolder" }, new { })
+                </li>
+                }
+                else
+                {
+                    <li class="waves-effect active">
+                        <a href="#!">@i</a>
+                    </li>
+                }
+
+            }
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+            {
+                <li class="waves-effect">
+                    @Ajax.RawActionLink("<i class='material-icons'>chevron_right</i>", "Index", "Inventories", new { page = ViewBag.CurrentPage + 1, sort = ViewBag.sort }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "tablePlaceHolder" }, new { })
+                </li>
+            }
+
+        </ul>
+    </div>
+</div>
+@section scripts{
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        function onBegin() {
+            $("#search").val("");
+        }
+    </script>
+}
+

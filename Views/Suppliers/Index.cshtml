@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ProductSupplyManagement.Models.Supplier>
+@{
+    ViewBag.Title = "Index::Suppliers";
+}
+
+
+@*<div class="z-depth-3 rounded_corner" style="padding:10px; margin-top:10px;">*@
+    <div class="card">
+        
+        <div class="card-content">
+            <div class="card-image">
+                <a href="@Url.Action("Create", "Suppliers")" class="btn-floating halfway-fab waves-effect waves-light red vertical_align_top"><i class="material-icons">add</i></a>
+            </div>
+            <div class="card-title">
+                Enlisted Suppliers
+            </div>
+            <div>
+
+                <table class="table bordered">
+                    <thead class="light-green lighten-1 white-text">
+                        <tr>
+                            <th>@Html.DisplayNameFor(x => x.SupplierCompany)</th>
+                            <th>@Html.DisplayNameFor(x => x.ContactNo)</th>
+                            <th>@Html.DisplayNameFor(x => x.Email)</th>
+                            <th>@Html.DisplayNameFor(x => x.Address)</th>
+                            <th>Supply History</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in Model)
+                        {
+                        <tr>
+                            <td>@Html.DisplayFor(x => s.SupplierCompany)</td>
+                            <td>@Html.DisplayFor(x => s.ContactNo)</td>
+                            <td>@Html.DisplayFor(x => s.Email)</td>
+                            <td>@Html.DisplayFor(x => s.Address)</td>
+                            <td>
+                                <a href="@Url.Action("Supplies", "Suppliers", new { id=s.SupplierId})" class="btn btn-small waves-effect waves-light ight-blue darken-1 rounded_corner"><i class="material-icons">menu_open</i></a>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Suppliers", new { id=s.SupplierId})" class="btn btn-small waves-effect waves-light ight-blue darken-1 rounded_corner"><i class="material-icons">edit</i></a>
+                                <a href="@Url.Action("Delete", "Suppliers", new { id=s.SupplierId})" class="btn btn-small waves-effect waves-light red darken-1 rounded_corner"><i class="material-icons">delete</i></a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@*</div>*@
+
+
+
+
+

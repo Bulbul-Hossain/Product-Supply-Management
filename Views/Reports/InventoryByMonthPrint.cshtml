@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ProductSupplyManagement.ViewModels.InventoryByMonthViewModel>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>InventoryByMonthPrint</title>
+</head>
+<body style="font-family: 'Segoe UI'; font-size:.90em;">
+    <div>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-floating halfway-fab waves-effect left"><i class="material-icons">arrow_back</i></a>
+        @using (Html.BeginForm("Export", "Reports", FormMethod.Post))
+        {
+            <input type="hidden" name="GridHtml" />
+            <input type="hidden" name="reportName" value="Inventory_Month" />
+            <button id="btnSubmit" title="Print report" type="submit" class="btn btn-floating btn halfway-fab right"><i class="material-icons">print</i></button>
+        }
+        <div id="printArea">
+            <h4>Inventory By Month</h4>
+            <div style="text-align:right">@DateTime.Now.ToString("yyyy-MMM-dd hh:mm tt")</div>
+            <table style="border: solid 1px #ccc; width:85%; margin:5px auto;" cellpadding="2" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th style="border-right:solid 1px #ccc;border-bottom:solid 2px #ccc;">Date</th>
+                        <th style="border-right:solid 1px #ccc;border-bottom:solid 2px #ccc;">Supplier</th>
+                        <th style="border-right:solid 1px #ccc;border-bottom:solid 2px #ccc;">Product</th>
+                        <th style="border-right:solid 1px #ccc;border-bottom:solid 2px #ccc;">Quantity</th>
+                    </tr>
+                </thead>
+                @foreach (var g in Model)
+                {
+                    <tr>
+                        <th colspan="4">@g.MonthYear</th>
+                    </tr>
+                    foreach (var m in g.Inventories)
+                    {
+                        <tr>
+                            <td style="border-right:solid 1px #ccc;border-bottom:solid 1px #ccc;">@m.Date.ToString("yyyy-MM-dd")</td>
+                            <td style="border-right:solid 1px #ccc;border-bottom:solid 1px #ccc;">@m.Supplier.SupplierCompany</td>
+                            <td style="border-right:solid 1px #ccc;border-bottom:solid 1px #ccc;">@m.Product.ProductName</td>
+                            <td style="border-right:solid 1px #ccc;border-bottom:solid 1px #ccc;">@m.Quantity</td>
+                        </tr>
+                    }
+
+                    <tr>
+                        <th colspan="4" style="text-align:right">Sub Total: @g.TotalQ</th>
+                    </tr>
+
+                }
+            </table>
+        </div>
+
+    </div>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $("input[name='GridHtml']").val($("#printArea").html());
+            });
+        });
+    </script>
+</body>
+</html>

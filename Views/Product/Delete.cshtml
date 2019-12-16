@@ -1,0 +1,37 @@
+﻿@model ProductSupplyManagement.Models.Product
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="row">
+    
+    <div class="card">
+        <div class="z-depth-2">
+            <div class="col s12">
+                
+                <div class="card-title" style="padding:8px;">
+                    <h4>Confirm delete?</h4>
+                    <a href="@Url.Action("Index", "Product")" class="btn btn-floating waves-effect waves-light red left" style="position:relative; top:5px;"><i class="material-icons">arrow_back</i></a>
+                </div>
+                <div class="card-content">
+                    <ul class="collection with-header">
+                        <li class="collection-header"><h4>Product Details</h4></li>
+                        <li class="collection-item"><div><strong>Product Name: </strong>@Model.ProductName</div></li>
+
+                        <li class="collection-item"><div><strong>Unit Price: </strong>@Html.DisplayFor(x => x.UnitPrice)</div></li>
+
+                        <li class="collection-item"><div><strong>Sell Unit: </strong>@Html.DisplayFor(x => x.SellUnit)</div></li>
+                        <li class="collection-item">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.HiddenFor(x => x.ProductId)
+                                <button type="submit" class="waves-effect waves-light btn-small red">Delete <i class="material-icons right">check</i></button>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

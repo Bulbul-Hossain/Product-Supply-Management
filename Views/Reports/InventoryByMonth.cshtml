@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ProductSupplyManagement.ViewModels.InventoryByMonthViewModel>
+@{
+    ViewBag.Title = "InventoryByMonth";
+}
+
+<div class="right">@DateTime.Now.ToString("yyyy-MMM-dd hh:mm tt")</div>
+<h4>Inventory By Month</h4>
+<div style="margin-bottom:3px;">
+    <a href="@Url.Action("Index", "Reports")" class="btn btn-floating waves-effect left"><i class="material-icons">arrow_back</i></a>
+    <a href="@Url.Action("InventoryByMonth", "Reports", new {format="print" })" class="btn btn-floating waves-effect waves-light right"><i class="material-icons">print</i></a>
+
+</div>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Supplier</th>
+            <th>Product</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    @foreach (var g in Model)
+    {
+        <tr>
+            <th colspan="4">@g.MonthYear</th>
+        </tr>
+        foreach (var m in g.Inventories)
+        {
+            <tr>
+                <td>@m.Date.ToString("yyyy-MM-dd")</td>
+                <td>@m.Supplier.SupplierCompany</td>
+                <td>@m.Product.ProductName</td>
+                <td>@m.Quantity</td>
+            </tr>
+        }
+
+        <tr>
+            <th colspan="4" style="text-align:right">Sub Total: @g.TotalQ</th>
+        </tr>
+
+    }
+</table>

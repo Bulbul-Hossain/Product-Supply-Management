@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!--Import materialize.css-->
+    
+    <link href="~/content/material-icons/material-design-icons.css" rel="stylesheet" />
+    <link href="~/content/materialize/css/materialize.css" rel="stylesheet" />
+    <!--Let browser know website is optimized for mobile-->
+
+    @RenderSection("styles", false)
+    <title>@ViewBag.Title</title>
+</head>
+
+<body>
+
+    <div class="">
+        <ul id="dropdown1" class="dropdown-content">
+            <li>
+                @Html.ActionLink("Products", "Index", "Product")
+            </li>
+            <li>
+                @Html.ActionLink("Suppliers", "Index", "Suppliers")
+            </li>
+            <li>
+                @Html.ActionLink("Inventories", "Index", "Inventories")
+            </li>
+            <li class="divider"></li>
+            <li>@Html.ActionLink("Reports", "Index", "Reports")</li>
+        </ul>
+        <nav>
+            <div class="container">
+                <div class="nav-wrapper">
+
+                    <a href="/" class="brand-logo">Supplier-Inventory Tracker</a>
+                    
+                    <ul id="nav-mobile" class="right">
+                        <li><a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons left">menu</i></a></li>
+                        <li><a href="/">Home</a></li>
+                        
+                        <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Menu<i class="material-icons right">arrow_drop_down</i></a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+    </div>
+
+
+    @*<ul id="slide-out" class="sidenav">
+        <li><a class="sidenav-close" href="#!">Clicking this will close Sidenav</a></li>
+    </ul>
+    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>*@
+    <div class="container">
+        @RenderBody()
+    </div>
+    <div class="page-footer orange" style="padding-top:20px; padding-bottom:20px;">
+        <div class="footer-copyright">
+            <div class="container">
+                <span class="white-text">&copy;Copyright -2019</span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+
+    <script src="~/content/materialize/js/materialize.js"></script>
+    <script>
+        //$(".dropdown-trigger").dropdown();
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    var elems = document.querySelectorAll('.sidenav');
+        //    var instances = M.Sidenav.init(elems, options);
+        //});
+        M.AutoInit();
+        //$(document).ready(function () {
+        //    $('.sidenav').sidenav();
+        //});
+    </script>
+    @RenderSection("scripts", false)
+</body>
+</html>

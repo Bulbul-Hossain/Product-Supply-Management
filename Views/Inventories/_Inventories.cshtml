@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ProductSupplyManagement.Models.Inventory>
+@using ProductSupplyManagement.Helpers
+<table class="table bordered">
+    <thead class="light-green lighten-1 white-text">
+        <tr>
+            <th valign="middle">
+                @Ajax.RawActionLink($"{Html.DisplayNameFor(x => x.Date)}", "Index", "Inventories", new { sort = ViewBag.DateSort }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "tablePlaceHolder" }, new { @class = "white-text" })
+                <i class='material-icons right'>@(ViewBag.DateSort == "date_desc"? "expand_more" : "expand_less")</i>
+            </th>
+            <th valign="middle">
+                @Ajax.RawActionLink($"{Html.DisplayNameFor(x => x.Supplier.SupplierCompany)}", "Index", "Inventories", new { sort = ViewBag.CompanySort }, new AjaxOptions { HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "tablePlaceHolder" }, new { @class = "white-text" })
+                <i class='material-icons right'>@(ViewBag.CompanySort == "company_desc" ? "expand_more" : "expand_less")</i>
+            </th>
+            <th>@Html.DisplayNameFor(x => x.Product.ProductName)</th>
+            <th>@Html.DisplayNameFor(x => x.LotNo)</th>
+            <th>@Html.DisplayNameFor(x => x.Quantity)</th>
+
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(x => s.Date)</td>
+                <td>@Html.DisplayFor(x => s.Supplier.SupplierCompany)</td>
+                <td>@Html.DisplayFor(x => s.Product.ProductName)</td>
+                <td>@Html.DisplayFor(x => s.LotNo)</td>
+                <td>@Html.DisplayFor(x => s.Quantity)</td>
+
+                <td>
+                    <a href="@Url.Action("Edit", "Suppliers", new { id=s.SupplierId})" class="btn btn-small waves-effect waves-light ight-blue darken-1 rounded_corner"><i class="material-icons">edit</i></a>
+                    <a href="@Url.Action("Delete", "Suppliers", new { id=s.SupplierId})" class="btn btn-small waves-effect waves-light red darken-1 rounded_corner"><i class="material-icons">delete</i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

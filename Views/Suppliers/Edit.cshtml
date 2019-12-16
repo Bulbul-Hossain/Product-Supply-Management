@@ -1,0 +1,80 @@
+﻿@model ProductSupplyManagement.Models.Supplier
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+<div class="card">
+
+    <div>
+        <div class="card-content">
+
+            <div class="card-title border_horizontal">
+
+                Edit suuplier data
+            </div>
+
+            <div class="row">
+                <div class="col s12 m8 offset-m2 border_all border_outer">
+                    @using (Html.BeginForm("Edit", "Suppliers", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(x=> x.SupplierId)
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.TextBoxFor(x => x.SupplierCompany, new { @class = "validate" })
+                                @Html.LabelFor(x => x.SupplierCompany)
+                                @Html.ValidationMessageFor(x => x.SupplierCompany, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.TextBoxFor(x => x.ContactNo, new { @class = "validate" })
+                                @Html.LabelFor(x => x.ContactNo)
+                                @Html.ValidationMessageFor(x => x.ContactNo, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.TextBoxFor(x => x.Email, new { @class = "validate" })
+                                @Html.LabelFor(x => x.Email, new { style = "font-size:1rem;" })
+                                @Html.ValidationMessageFor(x => x.Email, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.TextBoxFor(x => x.Address, new { @class = "validate" })
+                                @Html.LabelFor(x => x.Address, new { style = "font-size:1rem;" })
+                                @Html.ValidationMessageFor(x => x.Address, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <span class="left"><a href="@Url.Action("Index", "Suppliers")" class="btn waves-effect waves-light"><i class="material-icons">navigate_before</i></a></span>
+                            <span class="right"><button type="submit" class="waves-effect waves-light btn">Update <i class="material-icons right">system_update_alt</i></button></span>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    
+}
+

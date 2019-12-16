@@ -1,0 +1,106 @@
+﻿@model ProductSupplyManagement.Models.Inventory
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="row">
+    <a href="@Url.Action("Index", "Inventories")" class="btn btn-floating waves-effect waves-light red" style="position:relative; top:5px;"><i class="material-icons">arrow_back</i></a>
+    <div class="card">
+        <div class="z-depth-2">
+            <div class="col s12 m6 offset-m3">
+
+                <div class="card-title" style="padding:8px;">
+                    <h4 class="center">Add New Inventory</h4>
+
+                </div>
+                <div class="card-content">
+                    @using (Ajax.BeginForm("Create",new { }, new AjaxOptions { HttpMethod="POST", OnSuccess="notifySuccess", OnFailure= "notifyFail", OnComplete="onComplete", OnBegin="onBegin" },new { id="createForm"} ))
+                    {
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.TextBoxFor(x => x.Date, new { @class = "validate" })
+                                @Html.LabelFor(x => x.Date)
+                                @Html.ValidationMessageFor(x => x.Date, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.DropDownListFor(x => x.SupplierId, ViewBag.SupplierId as SelectList, "", new { @class = "validate" })
+                                @Html.LabelFor(x => x.SupplierId, new { style = "font-size:1rem;" })
+                                @Html.ValidationMessageFor(x => x.SupplierId, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.DropDownListFor(x => x.ProductId, ViewBag.ProductId as SelectList, "", new { @class = "validate" })
+                                @Html.LabelFor(x => x.ProductId, new { style = "font-size:1rem;" })
+                                @Html.ValidationMessageFor(x => x.ProductId, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.TextBox("LotNo","(auto)", new { @class = "validate", value="(auto)" })
+                                @Html.LabelFor(x => x.LotNo)
+                                @Html.ValidationMessageFor(x => x.LotNo, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="input-field">
+
+                                @Html.TextBoxFor(x => x.Quantity, new { @class = "validate" })
+                                @Html.LabelFor(x => x.Quantity)
+                                @Html.ValidationMessageFor(x => x.Quantity, "", new { @class = "helper-text red-text" })
+                            </div>
+
+                        </div>
+                        <div class="row right-align">
+                            <button type="submit" class="waves-effect waves-light btn">Save <i class="material-icons right">save_alt</i></button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Date').datepicker();
+        });
+        function onBegin() {
+            $("#LotNo").val('auto');
+        }
+        function notifySuccess(r) {
+            console.log(r);
+            if(r.success)
+            {
+                M.toast({ html: 'Data insert operation successful.' });
+                $("#createForm").trigger('reset');
+            }
+            else {
+                M.toast({ html: 'Data insert operation failed.' });
+            }
+        }
+        function notifyFail(e) {
+            console.log(e);
+        }
+        function onComplete() {
+            
+            console.log("done");
+        }
+    </script>
+}
+
